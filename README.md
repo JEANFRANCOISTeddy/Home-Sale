@@ -4,4 +4,4 @@
 
 ## Project description :
 
-Smart Contract to manage a real estate agency company
+Smart Contract in PascalLIGO to manage a real estate agency company
