@@ -12,3 +12,7 @@ git clone https://github.com/JEANFRANCOISTeddy/Home-Sale.git
 ```
 
 ## How to use
+#### Compile :
+``` ligo compile-contract Home-Sale/homeSale.ligo main ```
+#### Testing :
+``` ligo dry-run Home-Sale/homeSale.ligo main ```
