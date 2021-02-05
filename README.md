@@ -1,18 +1,18 @@
 <p align="center">
-    <img src="https://image.noelshack.com/fichiers/2021/05/1/1612177094-45f1b4ea-0f53-4b06-b048-05a6a6cca972-200x200.png" width="150">
+    <img src="https://image.noelshack.com/fichiers/2021/05/5/1612517447-9b168454-d32d-4b88-b6de-4c9cde8146f1-200x200.png" width="200">
     <p align="center">
-    Smart Contract in PascalLIGO to manage a real estate agency company
+    Smart Contract in PascalLIGO
     </p>
 </p>
 
 ## Installation
 
 ```
-git clone https://github.com/JEANFRANCOISTeddy/Home-Sale.git
+git clone https://github.com/JEANFRANCOISTeddy/Ligo-Project.git
 ```
 
 ## How to use
 #### Compile :
-``` ligo compile-contract Home-Sale/homeSale.ligo main ```
+
 #### Testing :
-``` ligo dry-run Home-Sale/homeSale.ligo main ```
+
