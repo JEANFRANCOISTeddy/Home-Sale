@@ -26,8 +26,7 @@ function demandeAvisAuConseiller(const s :storage) : int is block {
 
     const op : operation = Tezos.transaction(DemandeValeur , 0tz, destination);
     txs := op # txs;
-
-} with (txs, s)
+}with (txs ,s)
 
 function receptionValeurIndice(const lambda:(value)->value; const s: storage) : bool is block{
     //variable pour pas que la fonction reste vide
@@ -38,7 +37,7 @@ function receptionValeurIndice(const lambda:(value)->value; const s: storage) : 
     //alors Vrai 
 
     //sinon Faux
-}with s
+}with test
 
 //function execute( const s : storage) : return is block {
     //var txs : list(operation) := list end;
@@ -62,8 +61,8 @@ function receptionValeurIndice(const lambda:(value)->value; const s: storage) : 
 function main (const p : entryPoints; const s: storage) : (list(operation) * storage) is
 block { 
     const x : return = case p of
-    | DemandeAvisAuConseiller(x) -> demandeAvisAuConseiller(s)
-    | ReceptionValeurIndice(x) -> receptionValeurIndice(x, s)
+    | DemandeAvisAuConseiller(n) -> demandeAvisAuConseiller(s)
+    | ReceptionValeurIndice(n) -> receptionValeurIndice(n, s)
   end;
 } with x
 
