@@ -1,7 +1,7 @@
 <p align="center">
-    <img src="https://image.noelshack.com/fichiers/2021/05/5/1612517447-9b168454-d32d-4b88-b6de-4c9cde8146f1-200x200.png" width="200">
+    <img src="https://image.noelshack.com/fichiers/2021/06/6/1613217697-c6ad1bae-d2de-47f3-8370-f0a3d2fb2052-200x200.png" width="200">
     <p align="center">
-    Smart Contract in PascalLIGO
+    Smart Contract for a Financial Consulting Firm in PascalLIGO
     </p>
 </p>
 
