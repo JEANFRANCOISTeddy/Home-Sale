@@ -1,6 +1,6 @@
 #include "financierIndice.ligo"
 
-//type value is record [ x : int ]
+type value is record [ x : int ]
 
 type storage is record [
     func : (value)->value;
@@ -32,7 +32,7 @@ function demandeAvisAuConseiller(const s :storage) : int is block {
 function receptionValeurIndice(const lambda:(value)->value; const s: storage) : bool is block{
     //variable pour pas que la fonction reste vide
     test := 0;
-    
+
     //reçoit fund_value
     //vérifier si fund_value < 10 
     //alors Vrai 
