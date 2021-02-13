@@ -12,7 +12,7 @@ type storage is record [
 //type parameter is Algorithm of (value)->value
 
 type entryPoints is 
-    | DemandeAvisAuConseiller of unit
+    | DemandeAvisAuConseiller of int
     | ReceptionValeurIndice of bool
 
 function demandeAvisAuConseiller(const s :storage) : int is block {
@@ -24,7 +24,7 @@ function demandeAvisAuConseiller(const s :storage) : int is block {
     | Some(c) -> c
     end;
 
-    const op : operation = Tezos.transaction(demandeValeur , 0tz, destination);
+    const op : operation = Tezos.transaction(DemandeValeur , 0tz, destination);
     txs := op # txs;
 
 } with (txs, s)
