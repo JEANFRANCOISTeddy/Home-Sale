@@ -9,14 +9,10 @@ type storage is record [
     //result_execute: 
 ]
 
-type changerAlgorithmParameter is (value)->value
-type demandeAvisAuConseillerParameter is int *
-type receptionValeurIndiceParameter is bool *
-
 type entryPoints is 
-    | DemandeAvisAuConseiller of demandeAvisAuConseillerParameter
-    | ReceptionValeurIndice of receptionValeurIndiceParameter
-    | ChangerAlgorithm of changerAlgorithmParameter
+    | DemandeAvisAuConseiller of int
+    | ReceptionValeurIndice of bool
+    | ChangerAlgorithm of (value)->value
 
 function demandeAvisAuConseiller(const s :storage) : int is block {
     var txs : list(operation) := list end;
@@ -39,11 +35,12 @@ function receptionValeurIndice(const lambda:(value)->value; const s: storage) : 
 
 function changerAlgorithm(const lambda:(value)->value; const s : storage): storage is
 block{
-    if fund_value < 10 && fund_value > 2 then 
-        block {
+    test := 0;
+    //if fund_value < 10 && fund_value > 2 then 
+        //block {
 
-        }
-    else skip;
+        //}
+    //else skip;
 }with s
 
 //function execute( const s : storage) : return is block {
