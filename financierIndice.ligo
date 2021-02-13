@@ -20,7 +20,7 @@ function reset (const s : storage) : int is
       if 
         Tezos.sender =/= s.admin
       then
-        failwith("Vous n'avez pas les droits")
+        failwith("Vous n avez pas les droits")
       else
         skip 
    } with 0
