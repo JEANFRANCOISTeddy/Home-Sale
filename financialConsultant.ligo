@@ -30,7 +30,9 @@ function demandeAvisAuConseiller(const s :storage) : int is block {
 } with (txs, s)
 
 function receptionValeurIndice(const lambda:(value)->value; const s: storage) : bool is block{
+    //variable pour pas que la fonction reste vide
     test := 0;
+    
     //reçoit fund_value
     //vérifier si fund_value < 10 
     //alors Vrai 
