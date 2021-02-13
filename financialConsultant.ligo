@@ -3,19 +3,20 @@
 type value is record [ x : int ]
 
 type storage is record [
-    func : (value)->value;
+    func : (value)->bool;
     response: bool;
     financierIndiceContract : address
     //result_execute: 
 ]
 
-//type parameter is Algorithm of (value)->value
+type return is (list(operation) * storage)
 
 type entryPoints is 
     | DemandeAvisAuConseiller of int
     | ReceptionValeurIndice of bool
+    | ChangerAlgorithm of (value)->bool
 
-function demandeAvisAuConseiller(const s :storage) : int is block {
+function demandeAvisAuConseiller(const s :storage) : return is block {
     var txs : list(operation) := list end;
 
     const fic : option(contract(action)) = Tezos.get_contract_opt(s.financierIndiceContract);
@@ -26,43 +27,30 @@ function demandeAvisAuConseiller(const s :storage) : int is block {
 
     const op : operation = Tezos.transaction(DemandeValeur , 0tz, destination);
     txs := op # txs;
-}with (txs ,s)
+}with (txs, s)
 
-function receptionValeurIndice(const lambda:(value)->value; const s: storage) : bool is block{
-    //variable pour pas que la fonction reste vide
+//function receptionValeurIndice(const lambda:(value)->bool; const s: storage) : return is block{ skip }with s
+
+function receptionValeurIndice(const lambda:(value)->bool; const s: storage) : bool is block{
+    s.response := True;
+}with s.response
+
+function changerAlgorithm(const lambda:(value)->bool; const s : storage): storage is
+block{
     test := 0;
-
-    //reçoit fund_value
-    //vérifier si fund_value < 10 
-    //alors Vrai 
-
-    //sinon Faux
-}with test
-
-//function execute( const s : storage) : return is block {
-    //var txs : list(operation) := list end;
-    //const exist : option(proposal) = s.proposals[name];
-    //case exist of
-    //| None -> failwith("This proposal doesn't exist !")
-    //| Some(x) -> 
+    //if fund_value < 10 && fund_value > 2 then 
         //block {
-            //const cc : option(contract(action)) = Tezos.get_contract_opt(s.counterContract);
-            //const destination : contract(action) = case cc of 
-            //| None -> (failwith("This contract doesn't exist !"):contract(action))
-            //| Some(cont) -> cont
-            //end;
-            //const op : operation = Tezos.transaction(x.action, 0tz, destination);
-            //txs := op # txs;
-        //}
-    //end
-//} with s
 
+        //}
+    //else skip;
+}with s
 
 function main (const p : entryPoints; const s: storage) : (list(operation) * storage) is
 block { 
     const x : return = case p of
     | DemandeAvisAuConseiller(n) -> demandeAvisAuConseiller(s)
     | ReceptionValeurIndice(n) -> receptionValeurIndice(n, s)
+    | ChangerAlgorithm(n) -> changerAlgorithm(x, s)
   end;
 } with x
 
