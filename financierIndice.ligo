@@ -25,8 +25,7 @@ function reset (const s : storage) : int is
         skip 
    } with 0
 
-function demandeValeur (const s : storage) : int is
-  block { skip } with s.fund_value
+function demandeValeur (const s : storage) : int is s.fund_value
 
 function main (const p : action ; const s : storage) : list(operation) * storage is
   block { 
