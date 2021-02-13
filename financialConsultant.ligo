@@ -11,7 +11,7 @@ type storage is record [
 
 //type parameter is Algorithm of (value)->value
 
-type parameter is 
+type entryPoints is 
     | DemandeAvisAuConseiller of unit
     | ReceptionValeurIndice of bool
 
@@ -59,7 +59,7 @@ function receptionValeurIndice(const lambda:(value)->value; const s: storage) : 
 //} with s
 
 
-function main (const action : parameter; const s: storage) : return is
+function main (const p : entryPoints; const s: storage) : return is
 block { 
     const x : return = case p of
     | DemandeAvisAuConseiller(x) -> demandeAvisAuConseiller(s)
