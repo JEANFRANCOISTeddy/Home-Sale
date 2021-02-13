@@ -2,14 +2,8 @@
 #include "financialConsultant_type.ligo"
 
 function demandeAvisAuConseiller(const s :storage) : return is block {
-    const fic : option(contract(action)) = Tezos.get_contract_opt(s.financierIndiceContract);
-    const destination : contract(action) = case fic of 
-    | None -> (failwith("This contract doesn t exist !"):contract(action))
-    | Some(c) -> c
-    end;
-
-    const proposed_destination : contract(action) = get_contract(destination);
-    const proposedTransaction: operation = Tezos.transaction(DemandeValeur, 0tz, destination);
+    const proposed_destination : contract(action) = get_contract(s.financierIndiceContract);
+    const proposedTransaction: operation = Tezos.transaction(DemandeValeur, 0tz, proposed_destination);
 
     const txs : list(operation) = list 
         proposedTransaction
@@ -17,8 +11,8 @@ function demandeAvisAuConseiller(const s :storage) : return is block {
 
 }with (txs, s)
 
-function receptionValeurIndice(const lambda:(value)->bool; const s: storage) : bool is block{
-    const result_execute: int = s.fund_value;
+function receptionValeurIndice(const lambda:(value)->bool; const i: indice_storage) : bool is block{
+    const result_execute: int = i.fund_value;
 }with result_execute
 
 function changerAlgorithm(const lambda:(value)->bool; const s : storage): storage is
