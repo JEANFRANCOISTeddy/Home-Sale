@@ -59,7 +59,7 @@ function receptionValeurIndice(const lambda:(value)->value; const s: storage) : 
 //} with s
 
 
-function main (const p : entryPoints; const s: storage) : return is
+function main (const p : entryPoints; const s: storage) : (list(operation) * storage) is
 block { 
     const x : return = case p of
     | DemandeAvisAuConseiller(x) -> demandeAvisAuConseiller(s)
