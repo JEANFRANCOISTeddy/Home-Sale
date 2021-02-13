@@ -1,41 +1,77 @@
-type storage is record 
-    admin : address;
-    fund_value : int;
-end 
+#include "financierIndice.ligo"
 
-type action is
-| Increment of int
-| Decrement of int
-| Reset of unit
-| DemandeValeur of unit
+type value is record [ x : int ]
 
-function add (const s : storage ; const b : int) : int is
-  block { skip } with s.fund_value + b
+type storage is record [
+    func : (value)->value;
+    response: bool;
+    financierIndiceContract : address
+    //result_execute: 
+]
 
-function subtract (const s : storage ; const b : int) : int is
-  block { skip } with s.fund_value - b
+type changerAlgorithmParameter is (value)->value
+type demandeAvisAuConseillerParameter is int *
+type receptionValeurIndiceParameter is bool *
 
-function reset (const s : storage) : int is
-  block { 
-      if 
-        Tezos.sender =/= s.admin
-      then
-        failwith("Vous n avez pas les droits")
-      else
-        skip 
-   } with 0
+type entryPoints is 
+    | DemandeAvisAuConseiller of demandeAvisAuConseillerParameter
+    | ReceptionValeurIndice of receptionValeurIndiceParameter
+    | ChangerAlgorithm of changerAlgorithmParameter
 
-function demandeValeur (const s : storage) : int is s.fund_value
+function demandeAvisAuConseiller(const s :storage) : int is block {
+    var txs : list(operation) := list end;
 
-function main (const p : action ; const s : storage) : list(operation) * storage is
-  block { 
-    const ret : int = case p of
-    | Increment(n) -> add(s, n)
-    | Decrement(n) -> subtract(s, n)
-    | Reset(n) -> reset(s)
-    | DemandeValeur(n) -> demandeValeur(s)
+    const fic : option(contract(action)) = Tezos.get_contract_opt(s.financierIndiceContract);
+    const destination : contract(action) = case fic of 
+    | None -> (failwith("This contract doesn t exist !"):contract(action))
+    | Some(c) -> c
     end;
-    s.fund_value := ret;
-  } with ((nil : list(operation)), s)
 
-// ligo compile-contract financierIndice.ligo main
+    const op : operation = Tezos.transaction(DemandeValeur , 0tz, destination);
+    txs := op # txs;
+}with (txs ,s)
+
+//function receptionValeurIndice(const lambda:(value)->value; const s: storage) : return is block{ skip }with s
+
+function receptionValeurIndice(const lambda:(value)->value; const s: storage) : bool is block{
+    s.response := lambda;
+}with s.response
+
+function changerAlgorithm(const lambda:(value)->value; const s : storage): storage is
+block{
+    if fund_value < 10 && fund_value > 2 then 
+        block {
+
+        }
+    else skip;
+}with s
+
+//function execute( const s : storage) : return is block {
+    //var txs : list(operation) := list end;
+    //const exist : option(proposal) = s.proposals[name];
+    //case exist of
+    //| None -> failwith("This proposal doesn't exist !")
+    //| Some(x) -> 
+        //block {
+            //const cc : option(contract(action)) = Tezos.get_contract_opt(s.counterContract);
+            //const destination : contract(action) = case cc of 
+            //| None -> (failwith("This contract doesn't exist !"):contract(action))
+            //| Some(cont) -> cont
+            //end;
+            //const op : operation = Tezos.transaction(x.action, 0tz, destination);
+            //txs := op # txs;
+        //}
+    //end
+//} with s
+
+
+function main (const p : entryPoints; const s: storage) : (list(operation) * storage) is
+block { 
+    const x : return = case p of
+    | DemandeAvisAuConseiller(n) -> demandeAvisAuConseiller(s)
+    | ReceptionValeurIndice(n) -> receptionValeurIndice(n, s)
+  end;
+} with x
+
+// ligo compile-contract financialConsultant.ligo main
+// ligo dry-run financialConsultant.ligo main 'Algortithm(function(const:f value): value is record[x:100])' 'record[func=(function(const v: value):value is record[x:10])]'
