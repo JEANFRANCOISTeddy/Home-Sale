@@ -1,39 +1,25 @@
-#include "financierIndice.ligo"
-
-type value is record [ x : int ]
-
-type storage is record [
-    func : (value)->bool;
-    response: bool;
-    financierIndiceContract : address
-    //result_execute: 
-]
-
-type return is (list(operation) * storage)
-
-type entryPoints is 
-    | DemandeAvisAuConseiller of int
-    | ReceptionValeurIndice of bool
-    | ChangerAlgorithm of (value)->bool
+#include "financierIndice_type.ligo"
+#include "financialConsultant_type.ligo"
 
 function demandeAvisAuConseiller(const s :storage) : return is block {
-    var txs : list(operation) := list end;
-
     const fic : option(contract(action)) = Tezos.get_contract_opt(s.financierIndiceContract);
     const destination : contract(action) = case fic of 
     | None -> (failwith("This contract doesn t exist !"):contract(action))
     | Some(c) -> c
     end;
 
-    const op : operation = Tezos.transaction(DemandeValeur , 0tz, destination);
-    txs := op # txs;
+    const proposed_destination : contract(action) = get_contract(destination);
+    const proposedTransaction: operation = Tezos.transaction(DemandeValeur, 0tz, destination);
+
+    const txs : list(operation) = list 
+        proposedTransaction
+    end;
+
 }with (txs, s)
 
-//function receptionValeurIndice(const lambda:(value)->bool; const s: storage) : return is block{ skip }with s
-
 function receptionValeurIndice(const lambda:(value)->bool; const s: storage) : bool is block{
-    s.response := True;
-}with s.response
+    const result_execute: int = s.fund_value;
+}with result_execute
 
 function changerAlgorithm(const lambda:(value)->bool; const s : storage): storage is
 block{
@@ -50,7 +36,7 @@ block {
     const x : return = case p of
     | DemandeAvisAuConseiller(n) -> demandeAvisAuConseiller(s)
     | ReceptionValeurIndice(n) -> receptionValeurIndice(n, s)
-    | ChangerAlgorithm(n) -> changerAlgorithm(x, s)
+    | ChangerAlgorithm(n) -> changerAlgorithm(n, s)
   end;
 } with x
 
