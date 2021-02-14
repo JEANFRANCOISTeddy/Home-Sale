@@ -11,9 +11,11 @@ function demandeAvisAuConseiller(const s :storage) : return is block {
 
 }with (txs, s)
 
-function receptionValeurIndice(const lambda:(value)->bool; const i: indice_storage) : bool is block{
-    const result_execute: int = i.fund_value;
-}with result_execute
+function receptionValeurIndice(const value: int; const s: storage) : bool is block{
+    if value < 10 then s.response := True else s.response := False
+    
+    //const result_execute : int = receptionValeurIndice(value);
+}with s.response
 
 function changerAlgorithm(const lambda:(value)->bool; const s : storage): storage is
 block{
