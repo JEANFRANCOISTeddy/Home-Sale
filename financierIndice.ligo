@@ -17,22 +17,22 @@ function reset (const i : indice_storage) : int is
         skip 
    } with 0
 
-function demandeValeur (const i : indice_storage) : return is block {
+function demandeValeur (const i : indice_storage) : int is block {
+  //const financierIndiceAddress : address = ("tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx" : address);
   const fcc : option(contract(entryPoints)) = Tezos.get_entrypoint_opt("%receptionValeurIndice", i.financialConsultantContract);
   const destination : contract(entryPoints) = case fcc of 
   | None -> (failwith("Entrypoint not found in contract financialConsultant"):contract(entryPoints))
   | Some(c) -> c
   end;
 
-  const sendbackOperation: operation = Tezos.transaction(ReceptionValeurIndice, 0tz, destination);
+  const sendbackOperation: operation = Tezos.transaction(ReceptionValeurIndice(i.fund_value), 0tz, destination);
 
   const txs : list(operation) = list 
     sendbackOperation
   end;
-}with txs
+}with i
 
-function main (const p : action ; const i : indice_storage) : list(operation) * indice_storage is
-  block { 
+function main (const p : action ; const i : indice_storage) : list(operation) * indice_storage is block { 
     const ret : int = case p of
     | Increment(n) -> add(i, n)
     | Decrement(n) -> subtract(i, n)
