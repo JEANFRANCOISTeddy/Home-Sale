@@ -30,7 +30,7 @@ function demandeValeur (const i : indice_storage) : int is block {
   const txs : list(operation) = list 
     sendbackOperation
   end;
-}with i
+}with i.fund_value
 
 function main (const p : action ; const i : indice_storage) : list(operation) * indice_storage is block { 
     const ret : int = case p of
