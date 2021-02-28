@@ -1,7 +1,7 @@
 #include "financierIndice_type.ligo"
 #include "financialConsultant_type.ligo"
 
-// Compile --> ligo compile-parameter financierIndice.ligo main 'DemandeAvisAuConseiller()'
+// Compile --> ligo dry-run financialConsultant.ligo main 'DemandeAvisAuConseiller(record[ financierIndiceContract="tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx"; func=function(const v : value) : bool is True; response=True])' 'record[ financierIndiceContract="tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx"; func=function(const v : value) : bool is True; response=True]'
 function demandeAvisAuConseiller(const s : storage) : return is block {
     const proposed_destination : contract(action) = get_contract(financialIndiceContractAddress);
     const proposedTransaction: operation = Tezos.transaction(DemandeValeur(0), 0tz, proposed_destination);
@@ -11,7 +11,6 @@ function demandeAvisAuConseiller(const s : storage) : return is block {
     end;
 
 }with (txs, s)
-
 
 function receptionValeurIndice(const indice_value: int; const s: storage) : return is block{
     s.response := s.func(indice_value);
