@@ -1,12 +1,18 @@
-type indice_storage is record 
-    fund_value : int;
+type value is int 
+
+type storage is record [
+    func : (value)->bool;
+    response: bool;
+
     //address hors du storage
-    //financialConsultantContract : address
-end 
+    //financierIndiceContract : address
+]
 
-const financialConsultantContractAddress : address =("tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx" : address)
+type return is (list(operation) * storage)
 
-type action is
-| Increment of int
-| Decrement of int
-| DemandeValeur of int
+const financialIndiceContractAddress : address =("tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx" : address)
+
+type entryPoints is 
+    | DemandeAvisAuConseiller of int
+    | ReceptionValeurIndice of int
+    | ChangerAlgorithm of (value)->bool
