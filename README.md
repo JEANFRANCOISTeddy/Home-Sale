@@ -11,5 +11,6 @@
 git clone https://github.com/JEANFRANCOISTeddy/Ligo-Project.git
 ```
 
-## Description
+## How to use
+All commands to run or compilate are writing above each function
 
