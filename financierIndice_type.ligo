@@ -1,13 +1,12 @@
 type indice_storage is record 
-    admin : address;
     fund_value : int;
-    
     //address hors du storage
-    financialConsultantContract : address
+    //financialConsultantContract : address
 end 
+
+const financialConsultantContractAddress : address =("tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx" : address)
 
 type action is
 | Increment of int
 | Decrement of int
-| Reset of unit
-| DemandeValeur of unit
+| DemandeValeur of int
