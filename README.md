@@ -11,8 +11,5 @@
 git clone https://github.com/JEANFRANCOISTeddy/Ligo-Project.git
 ```
 
-## How to use
-#### Compile :
-
-#### Testing :
+## Description
 
